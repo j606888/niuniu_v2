@@ -1,7 +1,16 @@
-class PlayerHand
-  def initialize(cards, is_dealer: false)
+class Poker::HandBase
+  attr_accessor :cards
+  attr_reader :win_lose_amount
+
+  def initialize
+    @cards = []
+    @win_lose_amount = nil
+  end
+
+  def pick_cards(cards)
+    raise "Cards already picked" if @cards.length > 0
+
     @cards = cards
-    # @is_dealer = is_dealer
   end
 
   def score
@@ -16,15 +25,6 @@ class PlayerHand
     return @cards if found_combination.nil?
 
     found_combination + (@cards - found_combination)
-  end
-
-  def battle(other_player_score, bet_amount)
-    return 0 if score == other_player_score
-
-    odds = PokerHelper.calculate_odd([score, other_player_score])
-    win = score > other_player_score ? 1 : -1
-
-    bet_amount * odds * win
   end
 
   private
