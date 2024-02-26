@@ -6,7 +6,8 @@ RSpec.describe Poker::PlayerHand do
     let(:player_hand) { described_class.new(bet_amount: bet_amount) }
 
     before do
-      player_hand.pick_cards([1, 2, 3, 4, 5])
+      cards = [1, 2, 3, 4, 5]
+      cards.each { |card| player_hand.pick_card(card) }
     end
 
     it 'returns 0 if scores are the same' do

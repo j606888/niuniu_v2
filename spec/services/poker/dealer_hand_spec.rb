@@ -5,13 +5,15 @@ RSpec.describe Poker::DealerHand do
     let!(:player_hands) do
       3.times.map do
         player_hand = Poker::PlayerHand.new(bet_amount: 100)
-        player_hand.pick_cards([1, 2, 3, 4, 7]) # score 7
+        cards = [1, 2, 3, 4, 7]
+        cards.each { |card| player_hand.pick_card(card) }
         player_hand
       end
     end
     let(:dealer_hand) do
       dh = described_class.new
-      dh.pick_cards([1, 2, 3, 9, 5]) # score 10
+      cards = [1, 2, 3, 9, 5]
+      cards.each { |card| dh.pick_card(card) } # score 10
       dh
     end
 

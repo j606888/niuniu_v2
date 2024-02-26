@@ -12,7 +12,7 @@ module PokerHelper
       value > 10 ? 10 : value
     end
 
-    def card_to_string(card_number)
+    def readable_card(card_number)
       suits = ["黑桃", "紅心", "方塊", "梅花"]
       values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
 
