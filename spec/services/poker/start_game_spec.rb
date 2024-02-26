@@ -10,6 +10,7 @@ RSpec.describe Poker::StartGame do
     described_class.call(
       dealer_hand: dealer_hand,
       player_hands: [player_hand_1, player_hand_2, player_hand_3],
+      # debug: true
     )
   end
 

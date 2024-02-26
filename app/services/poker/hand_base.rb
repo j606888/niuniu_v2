@@ -30,7 +30,8 @@ class Poker::HandBase
   end
 
   def readable_cards
-    cards_with_order.map { |card| PokerHelper.readable_card(card) }
+    str = cards_with_order.map { |card| PokerHelper.readable_card(card) }.join(', ')
+    "[#{str}]"
   end
 
   private

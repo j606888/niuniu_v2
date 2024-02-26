@@ -13,8 +13,8 @@ module PokerHelper
     end
 
     def readable_card(card_number)
-      suits = ["黑桃", "紅心", "方塊", "梅花"]
-      values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
+      suits = ["♠️", "♥️", "♦️", "♣️"]
+      values = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
 
       suit_index = (card_number - 1) / 13
       value_index = (card_number - 1) % 13
