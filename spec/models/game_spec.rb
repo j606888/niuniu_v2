@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Game, type: :model do
+  it { is_expected.to belong_to(:line_group) }
+  it { is_expected.to belong_to(:dealer).class_name('Player') }
+
   let!(:game) { create(:game) }
 
   it 'starts with bets_opened state' do

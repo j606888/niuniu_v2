@@ -18,7 +18,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_27_132610) do
     t.bigint "game_id", null: false
     t.bigint "player_id", null: false
     t.integer "bet_amount"
-    t.json "cards"
+    t.json "cards", default: []
     t.integer "win_amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -27,6 +27,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_27_132610) do
   end
 
   create_table "games", force: :cascade do |t|
+    t.integer "dealer_id", null: false
     t.bigint "line_group_id", null: false
     t.string "aasm_state", null: false
     t.integer "max_bet_amount", null: false

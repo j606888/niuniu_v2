@@ -3,6 +3,11 @@ class Game < ApplicationRecord
 
   belongs_to :line_group
   has_many :bet_records
+  belongs_to :dealer, class_name: 'Player', foreign_key: 'dealer_id'
+
+  scope :ongoing, -> { where(aasm_state: %w[bets_opened bets_locked battle_started]) }
+
+  validates :max_bet_amount, presence: true, numericality: { greater_than: 0 }
 
   aasm do
     state :bets_opened, initial: true
