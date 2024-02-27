@@ -20,14 +20,19 @@ RSpec.describe Poker::PlayerHand do
       expect(player_hand.win_lose_amount).to eq(100)
     end
 
-    it 'return -200 if lose and other player score if 8' do
+    it 'return -200 if lose and other player score is 8' do
       player_hand.battle(8)
       expect(player_hand.win_lose_amount).to eq(-200)
     end
 
-    it 'return -300 if lose and other player score if 10' do
+    it 'return -300 if lose and other player score is 10' do
       player_hand.battle(10)
       expect(player_hand.win_lose_amount).to eq(-300)
+    end
+
+    it 'return -500 if lose and other player score is 11' do
+      player_hand.battle(11)
+      expect(player_hand.win_lose_amount).to eq(-500)
     end
   end
 end

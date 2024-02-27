@@ -7,6 +7,12 @@
 
 module PokerHelper
   class << self
+    def is_jqk?(card_number)
+      rank = (card_number - 1) % 13
+
+      [11, 12, 13].include?(rank + 1)
+    end
+
     def card_value(card_number)
       value = ( card_number - 1 ) % 13 + 1
       value > 10 ? 10 : value
@@ -23,6 +29,7 @@ module PokerHelper
     end
 
     def calculate_odd(scores)
+      return 5 if scores.include?(11)
       return 3 if scores.include?(10)
       return 2 if scores.include?(9)
       return 2 if scores.include?(8)

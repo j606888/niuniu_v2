@@ -17,6 +17,7 @@ class Poker::HandBase
 
   def score
     return -1 if found_combination.nil?
+    return 11 if @cards.all? { |card| PokerHelper.is_jqk?(card) }
 
     remaining_cards = @cards - found_combination
     real_score = remaining_cards.map { |card| PokerHelper.card_value(card) }.sum % 10

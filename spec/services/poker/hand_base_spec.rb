@@ -35,6 +35,12 @@ RSpec.describe Poker::HandBase do
       expect(hand_base.score).to eq(10)
     end
 
+    it 'return 11 if all cards are JQK' do
+      cards = [11, 12, 25, 39, 52]
+      cards.each { |card| hand_base.pick_card(card) }
+      expect(hand_base.score).to eq(11)
+    end
+
     it 'raise error if cards.length is not 5' do
       cards = [1, 2, 3]
       cards.each { |card| hand_base.pick_card(card) }
