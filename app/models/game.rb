@@ -20,6 +20,10 @@ class Game < ApplicationRecord
       transitions from: :bets_opened, to: :bets_locked
     end
 
+    event :unlock_bets do
+      transitions from: :bets_locked, to: :bets_opened
+    end
+
     event :start_battle do
       transitions from: :bets_locked, to: :battle_started
     end
