@@ -49,14 +49,13 @@ class LineController < ApplicationController
           match = text.match(/LIMIT\s+(\d+)/)
           if match
             max_bet_amount = match[1].to_i
-            # 要建立新遊戲
+            GameService::Create.call(player_id: player.id, line_group_id: line_group.id, max_bet_amount: max_bet_amount)
             client.reply_message(event['replyToken'], new_game_message(line_group))
             break
           end
 
           match = text.match(/^\d+$/)
-          if match
-            # 要真的下注
+          if match && match[0].to_i != 0
             bet_amount = match[0].to_i
             GameService::PlayerBet.call(line_group_id: line_group.id, player_id: player.id, bet_amount: bet_amount)
             client.reply_message(event['replyToken'], bet_message(player, bet_amount))
@@ -64,20 +63,16 @@ class LineController < ApplicationController
           end
 
           if text == "STOP"
-            # GameService::Lock.call(player_id: player.id, line_group_id: line_group.id)
+            GameService::Lock.call(player_id: player.id, line_group_id: line_group.id)
             client.reply_message(event['replyToken'], bets_locked(line_group))
             break
           end
 
           if text == "GOGO"
-            # GameService::Battle.call(dealer_id: player.id, line_group_id: line_group.id)
+            GameService::Battle.call(dealer_id: player.id, line_group_id: line_group.id)
             client.reply_message(event['replyToken'], game_result(line_group))
             break
           end
-          # message = {
-          #   type: 'text',
-          #   text: event.message['text']
-          # }
         end
       end
     end
