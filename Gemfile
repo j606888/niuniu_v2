@@ -13,12 +13,14 @@ gem "stimulus-rails"
 gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
+gem "aasm"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem "rspec-rails", "~> 5.0.0"
   gem "pry-rails"
   gem "dotenv-rails"
+  gem "factory_bot_rails"
 end
 
 group :development do
@@ -29,4 +31,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem "shoulda-matchers"
 end

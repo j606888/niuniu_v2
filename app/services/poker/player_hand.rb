@@ -1,7 +1,8 @@
 class Poker::PlayerHand < Poker::HandBase
   attr_reader :bet_amount
 
-  def initialize(bet_amount: 0)
+  def initialize(player_id: nil, bet_amount: 0)
+    @player_id = player_id
     @bet_amount = bet_amount
     @cards = []
     @win_lose_amount = nil

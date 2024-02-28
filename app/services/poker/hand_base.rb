@@ -1,10 +1,11 @@
 class Poker::HandBase
   attr_accessor :cards
-  attr_reader :win_lose_amount, :readable_cards
+  attr_reader :win_lose_amount, :readable_cards, :player_id
 
   CARD_AMOUNT = 5
 
-  def initialize
+  def initialize(player_id: nil)
+    @player_id = player_id
     @cards = []
     @win_lose_amount = nil
   end
