@@ -2,8 +2,9 @@ class Game < ApplicationRecord
   include AASM
 
   belongs_to :line_group
-  has_many :bet_records
   belongs_to :dealer, class_name: 'Player', foreign_key: 'dealer_id'
+  belongs_to :game_bundle, optional: true
+  has_many :bet_records
 
   scope :ongoing, -> { where(aasm_state: %w[bets_opened bets_locked battle_started]) }
 

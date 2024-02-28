@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_27_132610) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_28_151916) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -22,8 +22,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_27_132610) do
     t.integer "win_amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "score"
     t.index ["game_id"], name: "index_bet_records_on_game_id"
     t.index ["player_id"], name: "index_bet_records_on_player_id"
+  end
+
+  create_table "game_bundles", force: :cascade do |t|
+    t.bigint "line_group_id", null: false
+    t.string "aasm_state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["line_group_id"], name: "index_game_bundles_on_line_group_id"
   end
 
   create_table "games", force: :cascade do |t|
@@ -33,6 +42,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_27_132610) do
     t.integer "max_bet_amount", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "game_bundle_id"
     t.index ["line_group_id"], name: "index_games_on_line_group_id"
   end
 
@@ -55,6 +65,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_27_132610) do
 
   add_foreign_key "bet_records", "games"
   add_foreign_key "bet_records", "players"
+  add_foreign_key "game_bundles", "line_groups"
   add_foreign_key "games", "line_groups"
   add_foreign_key "players", "line_groups"
 end

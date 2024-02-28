@@ -6,6 +6,8 @@
 # | 梅花 ♣️ | 40 | 41 | 42 | 43 | 44 | 45 | 46 | 47 | 48 | 49 | 50 | 51 | 52 |
 
 module PokerHelper
+  IMAGE_URL = "https://james-niuniu.s3.ap-southeast-1.amazonaws.com/poker_v2/card_${card_number}.jpg"
+
   class << self
     def is_jqk?(card_number)
       rank = (card_number - 1) % 13
@@ -35,6 +37,32 @@ module PokerHelper
       return 2 if scores.include?(8)
 
       1
+    end
+
+    def card_image(card_number)
+      IMAGE_URL.gsub("${card_number}", card_number.to_s)
+    end
+
+    def score_to_text(score)
+      if score == 11
+        "五王"
+      elsif score == 10
+        "妞妞"
+      elsif score == -1
+        "☠️"
+      else
+        "#{score}點"
+      end
+    end
+
+    def win_amount_to_text(win_amount)
+      if win_amount > 0
+        "Win: #{win_amount}"
+      elsif win_amount < 0
+        "Lose: #{win_amount.abs}"
+      else
+        "-"
+      end
     end
   end
 end
