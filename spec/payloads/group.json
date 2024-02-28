@@ -22,29 +22,5 @@
     }
   ],
   "controller": "line",
-  "action": "hook",
-  "line": {
-    "destination": "U6146ca5854fc95c0881ebd7b7a8056cf",
-    "events": [
-      {
-        "type": "message",
-        "message": {
-          "type": "text",
-          "id": "497067939145712149",
-          "quoteToken": "tPh8fuQaUb_oIHX2WIVUc5iPaw7_ZFCHs0K1UHLdM25TIlr-ga2NjcFmu20ktbbKjNSlOcv5r56iQnNJeAj35OqtLjWKogeqp7--7zMif8JRhG2NeHGSyk49TbVOahH3hokZBOdglXsrpHa3vh9Okw",
-          "text": "測試訊息"
-        },
-        "webhookEventId": "01HQQBATXGKAW177BPZXH5BWYQ",
-        "deliveryContext": { "isRedelivery": false },
-        "timestamp": 1709106883437,
-        "source": {
-          "type": "group",
-          "groupId": "Ce83785f3751c06f0cb0c010afe424708",
-          "userId": "U41341df97042681252c3abba7a9ea607"
-        },
-        "replyToken": "514c015ce58f4af2be847a906e7893dc",
-        "mode": "active"
-      }
-    ]
-  }
+  "action": "hook"
 }
