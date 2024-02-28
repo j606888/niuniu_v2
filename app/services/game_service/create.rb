@@ -17,10 +17,6 @@ class GameService::Create < Service
       line_group: line_group,
       max_bet_amount: @max_bet_amount
     )
-    BetRecord.create!(
-      player: player,
-      game: game,
-    )
     game
   end
 

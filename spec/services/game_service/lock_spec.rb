@@ -14,7 +14,6 @@ describe GameService::Lock do
   let(:service) { described_class.new(**params) }
 
   before do
-    create :bet_record, game: game, player: dealer
     create :bet_record, game: game, player: player, bet_amount: 50
   end
 
@@ -33,7 +32,7 @@ describe GameService::Lock do
   it "raise error if only one player" do
     BetRecord.last.destroy
 
-    expect { service.perform }.to raise_error("At least two players are required to start the game.")
+    expect { service.perform }.to raise_error("At least one bet are required to start the game.")
   end
 
   it "raise error if game is not aasm_state `bets_opened`" do

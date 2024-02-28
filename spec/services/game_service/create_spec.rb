@@ -20,16 +20,6 @@ describe GameService::Create do
     expect(game.max_bet_amount).to eq(100)
   end
 
-  it "create a new bet record for the player" do
-    service.perform
-
-    bet_record = BetRecord.last
-    expect(bet_record.player).to eq(player)
-    expect(bet_record.cards).to eq([])
-    expect(bet_record.bet_amount).to eq(nil)
-    expect(bet_record.win_amount).to eq(nil)
-  end
-
   it "raise error if player does not belong to line group" do
     player.update(line_group: create(:line_group))
 

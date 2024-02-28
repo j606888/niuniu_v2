@@ -13,15 +13,15 @@ class GameService::Lock < Service
     raise "Player does not belong to this line group." if player.line_group != line_group
     raise "Player is not dealer" if game.dealer != player
 
-    validate_at_least_two_players!(game)
+    validate_at_least_one_bet!(game)
     game.lock_bets!
   end
 
   private
 
-  def validate_at_least_two_players!(game)
-    return if game.bet_records.count >= 2
+  def validate_at_least_one_bet!(game)
+    return if game.bet_records.count >= 1
 
-    raise "At least two players are required to start the game."
+    raise "At least one bet are required to start the game."
   end
 end
