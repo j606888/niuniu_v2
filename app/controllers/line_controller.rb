@@ -88,6 +88,12 @@ class LineController < ApplicationController
             client.reply_message(event['replyToken'], game_result(line_group))
             break
           end
+
+          if text == "CANCEL"
+            GameService::Cancel.call(player_id: player.id, line_group_id: line_group.id)
+            client.reply_message(event['replyToken'], [{ type: 'text', text: "已取消遊戲" }, new_round_flex_message(line_group)])
+            break
+          end
         end
       end
     end

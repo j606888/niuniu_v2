@@ -37,16 +37,21 @@ class LineMessageService::NewGame < Service
                   text: "莊家 - #{dealer.name}",
                   weight: "bold",
                   size: "md",
+                  flex: 2,
+                  gravity: "center",
                   contents: []
                 },
                 {
-                  type: "text",
-                  text: "取消",
-                  weight: "bold",
-                  size: "sm",
-                  color: "#C91212",
-                  align: "end",
-                  contents: []
+                  type: "button",
+                  action: {
+                    type: "message",
+                    label: "取消",
+                    text: "CANCEL"
+                  },
+                  color: "#ECA1A1FF",
+                  margin: "none",
+                  height: "sm",
+                  style: "primary"
                 }
               ]
             },

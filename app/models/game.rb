@@ -25,7 +25,7 @@ class Game < ApplicationRecord
     end
 
     event :cancel_game do
-      transitions from: :bets_opened, to: :game_ended
+      transitions from: :bets_opened, to: :game_canceled
     end
   end
 end
