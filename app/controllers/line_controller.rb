@@ -33,7 +33,7 @@ class LineController < ApplicationController
           LineApi.room_member_profile(line_group.group_id, user_id)
         end
 
-        Player.create!(line_group: line_group, line_user_id: user_id, name: player_info['displayName'])
+        player = Player.create!(line_group: line_group, line_user_id: user_id, name: player_info['displayName'])
       end
 
       case event
@@ -85,7 +85,7 @@ class LineController < ApplicationController
 
           if text == "GOGO"
             GameService::Battle.call(dealer_id: player.id, line_group_id: line_group.id)
-            client.reply_message(event['replyToken'], game_result(line_group))
+            client.reply_message(event['replyToken'], [game_result(line_group), new_round_flex_message(line_group)])
             break
           end
 

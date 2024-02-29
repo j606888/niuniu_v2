@@ -59,6 +59,7 @@ class LineMessageService::Dashboard < Service
               type: "text",
               text: player.name,
               weight: "bold",
+              flex: 2,
               margin: "sm",
               contents: []
             },
@@ -99,16 +100,19 @@ class LineMessageService::Dashboard < Service
                   text: "新回合進行中",
                   weight: "bold",
                   size: "md",
+                  flex: 2,
                   contents: []
                 },
                 {
-                  type: "text",
-                  text: "結算",
-                  weight: "bold",
-                  size: "sm",
-                  color: "#C91212",
-                  align: "end",
-                  contents: []
+                  type: "button",
+                  action: {
+                    type: "message",
+                    label: "結算",
+                    text: "SETTLE"
+                  },
+                  color: "#ECA1A1",
+                  height: "sm",
+                  style: "primary"
                 }
               ]
             },
