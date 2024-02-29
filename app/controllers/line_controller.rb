@@ -60,8 +60,12 @@ class LineController < ApplicationController
 
             last_game = line_group.games.last
             if last_game.nil? || ['game_ended', 'game_canceled'].include?(last_game.aasm_state)
-              GameService::Create.call(player_id: player.id, line_group_id: line_group.id, max_bet_amount: amount)
-              client.reply_message(event['replyToken'], new_game_message(line_group))
+              begin
+                GameService::Create.call(player_id: player.id, line_group_id: line_group.id, max_bet_amount: amount)
+                client.reply_message(event['replyToken'], new_game_message(line_group))
+              rescue GameService::Create::BetAmountOverMaxError => e
+                client.reply_message(event['replyToken'], { type: 'text', text: "[失敗] 為了我們的友情，開局金額禁止超過 #{GameService::Create::MAX_BET_AMOUNT}" })
+              end
               break
             elsif last_game.aasm_state == 'bets_opened'
               begin
