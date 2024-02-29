@@ -1,11 +1,11 @@
-class LineMessageService::Lock < Service
+class LineMessageService::CurrentBet < Service
   def initialize(line_group_id:)
     @line_group_id = line_group_id
   end
 
   def perform
     line_group = LineGroup.find_by(id: @line_group_id)
-    game = Game.find_by(line_group: line_group, aasm_state: 'bets_locked')
+    game = Game.find_by(line_group: line_group, aasm_state: 'bets_opened')
 
     current_bets = game.bet_records.includes(:player).map do |bet_record|
       {
@@ -32,15 +32,22 @@ class LineMessageService::Lock < Service
       }
     end
 
-    flex_message(current_bets)
+    if current_bets.empty?
+      {
+        type: 'text',
+        text: "尚無下注"
+      }
+    else
+      flex_message(game, current_bets)
+    end
   end
 
   private
 
-  def flex_message(current_bets)
+  def flex_message(game, current_bets)
     {
       type: 'flex',
-      altText: '停止下注',
+      altText: '當前下注',
       contents: {
         type: "bubble",
         body: {
@@ -59,7 +66,7 @@ class LineMessageService::Lock < Service
               contents: [
                 {
                   type: "text",
-                  text: "停止下注",
+                  text: "當前下注",
                   weight: "bold",
                   size: "md",
                   contents: []
@@ -83,6 +90,25 @@ class LineMessageService::Lock < Service
                   style: "primary"
                 }
               ]
+            },
+            {
+              type: "text",
+              text: "下注上限",
+              size: "xs",
+              color: "#666666",
+              align: "center",
+              margin: "xl",
+              wrap: false,
+              contents: []
+            },
+            {
+              type: "text",
+              text: game.max_bet_amount.to_s,
+              weight: "bold",
+              size: "3xl",
+              align: "center",
+              margin: "xs",
+              contents: []
             },
             {
               type: "separator",
@@ -121,29 +147,6 @@ class LineMessageService::Lock < Service
                 text: "GOGO"
               },
               color: "#2196F3",
-              height: "sm",
-              style: "primary"
-            },
-            {
-              type: "separator",
-              margin: "lg"
-            },
-            {
-              type: "text",
-              text: "玩家",
-              size: "xxs",
-              color: "#AAAAAA",
-              wrap: true,
-              contents: []
-            },
-            {
-              type: "button",
-              action: {
-                type: "message",
-                label: "繼續下注",
-                text: "BET_OPEN"
-              },
-              color: "#81D4FA",
               height: "sm",
               style: "primary"
             }

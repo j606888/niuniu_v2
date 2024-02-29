@@ -7,7 +7,7 @@ class GameService::Battle < Service
   def perform
     dealer = Player.find_by(id: @dealer_id)
     line_group = LineGroup.find_by(id: @line_group_id)
-    game = Game.find_by(line_group: line_group, aasm_state: "bets_locked")
+    game = Game.find_by(line_group: line_group, aasm_state: "bets_opened")
 
     raise "There is no ongoing game in this line group." if game.nil?
     raise "Player does not belong to this line group." if dealer.line_group != line_group

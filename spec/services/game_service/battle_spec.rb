@@ -4,7 +4,7 @@ describe GameService::Battle do
   let!(:line_group) { create(:line_group) }
   let!(:dealer) { create(:player, line_group: line_group) }
   let!(:player) { create(:player, line_group: line_group) }
-  let!(:game) { create(:game, line_group: line_group, dealer: dealer, max_bet_amount: 100, aasm_state: 'bets_locked') }
+  let!(:game) { create(:game, line_group: line_group, dealer: dealer, max_bet_amount: 100, aasm_state: 'bets_opened') }
   let!(:player_bet_record) { create(:bet_record, game: game, player: player, bet_amount: 30) }
   let(:params) do
     {

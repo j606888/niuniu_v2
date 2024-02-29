@@ -85,8 +85,8 @@ class LineMessageService::NewGame < Service
               type: "button",
               action: {
                 type: "message",
-                label: "停止下注",
-                text: "STOP"
+                label: "當前下注",
+                text: "NOW"
               },
               color: "#2196F3",
               height: "sm",

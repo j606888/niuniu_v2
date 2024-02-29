@@ -193,17 +193,6 @@ class LineMessageService::GameResult < Service
               contents: []
             },
             {
-              type: "button",
-              action: {
-                type: "message",
-                label: "自訂上限",
-                text: "Dealer"
-              },
-              color: "#81D4FA",
-              height: "sm",
-              style: "primary"
-            },
-            {
               type: "box",
               layout: "horizontal",
               spacing: "md",

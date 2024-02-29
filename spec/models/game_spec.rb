@@ -10,8 +10,8 @@ RSpec.describe Game, type: :model do
     expect(game.aasm_state).to eq('bets_opened')
   end
 
-  it 'transitions from betting_open to bets_locked' do
-    game.lock_bets
-    expect(game.aasm_state).to eq('bets_locked')
+  it 'transitions from betting_open to battle_started' do
+    game.start_battle
+    expect(game.aasm_state).to eq('battle_started')
   end
 end

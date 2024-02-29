@@ -135,22 +135,11 @@ class LineMessageService::Dashboard < Service
             },
             {
               type: "text",
-              text: "新遊戲(莊家按)",
+              text: "新遊戲(莊家按 or 輸入上限金額)",
               size: "xxs",
               color: "#AAAAAA",
               wrap: true,
               contents: []
-            },
-            {
-              type: "button",
-              action: {
-                type: "message",
-                label: "自訂上限",
-                text: "Dealer"
-              },
-              color: "#81D4FA",
-              height: "sm",
-              style: "primary"
             },
             {
               type: "box",
@@ -163,7 +152,7 @@ class LineMessageService::Dashboard < Service
                   action: {
                     type: "message",
                     label: "30",
-                    text: "LIMIT 30"
+                    text: "30"
                   },
                   color: "#2196F3",
                   height: "sm",
@@ -174,7 +163,7 @@ class LineMessageService::Dashboard < Service
                   action: {
                     type: "message",
                     label: "50",
-                    text: "LIMIT 50"
+                    text: "50"
                   },
                   color: "#2196F3",
                   height: "sm",
@@ -185,7 +174,7 @@ class LineMessageService::Dashboard < Service
                   action: {
                     type: "message",
                     label: "100",
-                    text: "LIMIT 100"
+                    text: "100"
                   },
                   color: "#2196F3",
                   height: "sm",

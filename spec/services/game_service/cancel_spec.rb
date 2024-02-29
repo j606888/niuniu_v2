@@ -33,7 +33,7 @@ describe GameService::Cancel do
     expect(game.reload.aasm_state).to eq("game_ended")
   end
 
-  it "raise error if game is not `bets_locked`" do
+  it "raise error if game is not `bets_opened`" do
     game.update!(aasm_state: 'battle_started')
 
     expect { service.perform }.to raise_error("There is no ongoing game in this line group.")

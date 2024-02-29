@@ -56,15 +56,26 @@ class LineController < ApplicationController
 
           match = text.match(/^\d+$/)
           if match && match[0].to_i != 0
-            bet_amount = match[0].to_i
-            GameService::PlayerBet.call(line_group_id: line_group.id, player_id: player.id, bet_amount: bet_amount)
-            client.reply_message(event['replyToken'], bet_message(player, bet_amount))
-            break
+            amount = match[0].to_i
+
+            last_game = line_group.games.last
+            if last_game.nil? || ['game_ended', 'game_canceled'].include?(last_game.aasm_state)
+              GameService::Create.call(player_id: player.id, line_group_id: line_group.id, max_bet_amount: amount)
+              client.reply_message(event['replyToken'], new_game_message(line_group))
+              break
+            elsif last_game.aasm_state == 'bets_opened'
+              begin
+                GameService::PlayerBet.call(line_group_id: line_group.id, player_id: player.id, bet_amount: amount)
+                client.reply_message(event['replyToken'], bet_message(player, amount))
+              rescue GameService::PlayerBet::BetAmountOverMaxError => e
+                client.reply_message(event['replyToken'], { type: 'text', text: "[失敗] 金額超出上限 (#{last_game.max_bet_amount})" })
+              end
+              break
+            end
           end
 
-          if text == "STOP"
-            GameService::Lock.call(player_id: player.id, line_group_id: line_group.id)
-            client.reply_message(event['replyToken'], bets_locked(line_group))
+          if text == "NOW"
+            client.reply_message(event['replyToken'], current_bet(line_group))
             break
           end
 
@@ -102,8 +113,8 @@ class LineController < ApplicationController
     LineMessageService::Bet.call(player_id: player.id, bet_amount: bet_amount)
   end
 
-  def bets_locked(line_group)
-    LineMessageService::Lock.call(line_group_id: line_group.id)
+  def current_bet(line_group)
+    LineMessageService::CurrentBet.call(line_group_id: line_group.id)
   end
 
   def game_result(line_group)
