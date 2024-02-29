@@ -94,6 +94,14 @@ class LineController < ApplicationController
             client.reply_message(event['replyToken'], [{ type: 'text', text: "已取消遊戲" }, new_round_flex_message(line_group)])
             break
           end
+
+          match = text.match(/^CONFIRM SETTLE #(\d+)$/)
+          if match
+            payment_confirmation_id = match[1].to_i
+            PaymentService::ConfirmPayment.call(game_bundle_id: payment_confirmation_id, player_id: player.id)
+            client.reply_message(event['replyToken'], { type: 'text', text: "#{player.name} 已確認結清" })
+            break
+          end
         end
       end
     end
