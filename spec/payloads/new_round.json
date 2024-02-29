@@ -1,0 +1,162 @@
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "md",
+    "action": {
+      "type": "uri",
+      "label": "Action",
+      "uri": "https://linecorp.com"
+    },
+    "contents": [
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "新回合進行中",
+            "weight": "bold",
+            "size": "md",
+            "contents": []
+          },
+          {
+            "type": "text",
+            "text": "結算",
+            "weight": "bold",
+            "size": "sm",
+            "color": "#C91212",
+            "align": "end",
+            "contents": []
+          }
+        ]
+      },
+      {
+        "type": "separator",
+        "margin": "lg"
+      },
+      {
+        "type": "text",
+        "text": "目前積分",
+        "size": "xxs",
+        "color": "#AAAAAA",
+        "wrap": true,
+        "contents": []
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "text",
+                "text": "James",
+                "weight": "bold",
+                "margin": "sm",
+                "contents": []
+              },
+              {
+                "type": "text",
+                "text": "260",
+                "size": "sm",
+                "color": "#666666",
+                "align": "end",
+                "contents": []
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "text",
+                "text": "蕭仲廷",
+                "weight": "bold",
+                "flex": 0,
+                "margin": "sm",
+                "contents": []
+              },
+              {
+                "type": "text",
+                "text": "-1230",
+                "size": "sm",
+                "color": "#666666",
+                "align": "end",
+                "contents": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "separator"
+      },
+      {
+        "type": "text",
+        "text": "新遊戲(莊家按)",
+        "size": "xxs",
+        "color": "#AAAAAA",
+        "wrap": true,
+        "contents": []
+      },
+      {
+        "type": "button",
+        "action": {
+          "type": "message",
+          "label": "自訂上限",
+          "text": "Dealer"
+        },
+        "color": "#81D4FA",
+        "height": "sm",
+        "style": "primary"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "spacing": "md",
+        "margin": "md",
+        "contents": [
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "30",
+              "text": "上限30"
+            },
+            "color": "#2196F3",
+            "height": "sm",
+            "style": "primary"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "50",
+              "text": "上限50"
+            },
+            "color": "#2196F3",
+            "height": "sm",
+            "style": "primary"
+          },
+          {
+            "type": "button",
+            "action": {
+              "type": "message",
+              "label": "100",
+              "text": "上限100"
+            },
+            "color": "#2196F3",
+            "height": "sm",
+            "style": "primary"
+          }
+        ]
+      }
+    ]
+  }
+}

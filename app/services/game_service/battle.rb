@@ -7,7 +7,7 @@ class GameService::Battle < Service
   def perform
     dealer = Player.find_by(id: @dealer_id)
     line_group = LineGroup.find_by(id: @line_group_id)
-    game = Game.find_by(line_group: line_group, aasm_state: "bets_locked")
+    game = Game.find_by(line_group: line_group, aasm_state: "bets_opened")
 
     raise "There is no ongoing game in this line group." if game.nil?
     raise "Player does not belong to this line group." if dealer.line_group != line_group
@@ -27,10 +27,10 @@ class GameService::Battle < Service
       player_hands: player_hands
     )
     ActiveRecord::Base.transaction do
-      BetRecord.create!(game: game, player: dealer, cards: dealer_hand.cards, win_amount: dealer_hand.win_lose_amount)
+      BetRecord.create!(game: game, player: dealer, cards: dealer_hand.cards, win_amount: dealer_hand.win_lose_amount, score: dealer_hand.score)
       player_hands.each do |player_hand|
         bet_record = game.bet_records.find { |bet_record| bet_record.player_id == player_hand.player_id }
-        bet_record.update!(cards: player_hand.cards, win_amount: player_hand.win_lose_amount)
+        bet_record.update!(cards: player_hand.cards, win_amount: player_hand.win_lose_amount, score: player_hand.score)
       end
     end
 

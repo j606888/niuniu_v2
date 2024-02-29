@@ -1,4 +1,7 @@
 class GameService::Create < Service
+  class BetAmountOverMaxError < StandardError; end
+
+  MAX_BET_AMOUNT = 200
   def initialize(player_id:, line_group_id:, max_bet_amount:)
     @player_id = player_id
     @line_group_id = line_group_id
@@ -9,6 +12,7 @@ class GameService::Create < Service
     player = Player.find_by(id: @player_id)
     line_group = LineGroup.find_by(id: @line_group_id)
 
+    raise BetAmountOverMaxError, "bet_amount over max_bet_amount" if @max_bet_amount > MAX_BET_AMOUNT
     validate_player_belong_to_line_group!(player, line_group)
     validate_none_ongoing_game!(line_group)
 
