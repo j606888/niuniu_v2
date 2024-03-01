@@ -16,13 +16,12 @@ describe GameService::Cancel do
   before do
     create :bet_record, game: game, player: dealer
     create :bet_record, game: game, player: player, bet_amount: 50
-    game.lock_bets!
   end
 
   it "cancel the game" do
     service.perform
 
-    expect(game.reload.aasm_state).to eq("game_ended")
+    expect(game.reload.aasm_state).to eq("game_canceled")
   end
 
   it "can cancel by other player" do
@@ -30,7 +29,7 @@ describe GameService::Cancel do
 
     service.perform
 
-    expect(game.reload.aasm_state).to eq("game_ended")
+    expect(game.reload.aasm_state).to eq("game_canceled")
   end
 
   it "raise error if game is not `bets_opened`" do

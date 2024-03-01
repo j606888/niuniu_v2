@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :game_bundle do
-    line_group { nil }
-    aasm_state { "MyString" }
+    association :line_group
+    aasm_state { "created" }
   end
 end

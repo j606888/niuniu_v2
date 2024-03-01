@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_28_151916) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_29_164233) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,6 +54,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_28_151916) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "payment_confirmations", force: :cascade do |t|
+    t.bigint "game_bundle_id", null: false
+    t.bigint "player_id", null: false
+    t.integer "amount", null: false
+    t.boolean "is_confirmed", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_bundle_id"], name: "index_payment_confirmations_on_game_bundle_id"
+    t.index ["player_id"], name: "index_payment_confirmations_on_player_id"
+  end
+
   create_table "players", force: :cascade do |t|
     t.string "name"
     t.string "line_user_id"
@@ -67,5 +78,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_28_151916) do
   add_foreign_key "bet_records", "players"
   add_foreign_key "game_bundles", "line_groups"
   add_foreign_key "games", "line_groups"
+  add_foreign_key "payment_confirmations", "game_bundles"
+  add_foreign_key "payment_confirmations", "players"
   add_foreign_key "players", "line_groups"
 end
