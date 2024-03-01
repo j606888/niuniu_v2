@@ -40,7 +40,7 @@ class LineController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
-          text = event.message['text']
+          text = event.message['text'].strip
 
           # if text.upcase == 'TEST'
           #   lose_message = LineMessageService::ForceSettle.call(line_group_id: line_group.id)
@@ -48,6 +48,12 @@ class LineController < ApplicationController
           #   r = client.reply_message(event['replyToken'], lose_message)
           #   break
           # end
+
+          if text.upcase == 'README' || text.upcase == "READ ME"
+            readme
+            client.reply_message(event['replyToken'], readme)
+            break
+          end
 
           if text == '妞妞'
             client.reply_message(event['replyToken'], new_round_flex_message(line_group))
@@ -152,6 +158,10 @@ class LineController < ApplicationController
 
   def game_result(line_group)
     LineMessageService::GameResult.call(line_group_id: line_group.id)
+  end
+
+  def readme
+    LineMessageService::Readme.call
   end
 
   def any_player_lose_over_1000?(line_group)

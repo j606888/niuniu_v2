@@ -99,23 +99,32 @@ class LineMessageService::Dashboard < Service
               type: "box",
               layout: "vertical",
               spacing: "md",
-              action: {
-                type: "uri",
-                label: "Action",
-                uri: "https://linecorp.com"
-              },
               contents: [
                 {
                   type: "box",
                   layout: "horizontal",
                   contents: [
                     {
-                      type: "text",
-                      text: "四七小老二",
-                      weight: "bold",
-                      size: "md",
+                      type: "box",
+                      layout: "vertical",
                       flex: 2,
-                      contents: []
+                      contents: [
+                        {
+                          type: "text",
+                          text: "四七小老二",
+                          weight: "bold",
+                          size: "md",
+                          contents: []
+                        },
+                        {
+                          type: "text",
+                          text: "輸入 README 看說明",
+                          size: "xxs",
+                          color: "#AAAAAA",
+                          margin: "sm",
+                          contents: []
+                        }
+                      ]
                     },
                     {
                       type: "button",
