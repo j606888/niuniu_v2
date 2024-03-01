@@ -195,7 +195,7 @@ class LineMessageService::Readme < Service
                     },
                     {
                       type: "text",
-                      text: "未確認戰積：",
+                      text: "未確認戰績：",
                       weight: "bold",
                       margin: "lg",
                       wrap: true,
@@ -209,7 +209,7 @@ class LineMessageService::Readme < Service
                     },
                     {
                       type: "text",
-                      text: "自行商量誰給誰多少。等到自己的部分付款或者收到的時候再按下「確認收付」。全部的人都按過之後這張戰積就會消失。",
+                      text: "自行商量誰給誰多少。等到自己的部分付款或者收到的時候再按下「確認收付」。全部的人都按過之後這張戰績就會消失。",
                       weight: "regular",
                       margin: "md",
                       wrap: true,
@@ -217,7 +217,7 @@ class LineMessageService::Readme < Service
                     },
                     {
                       type: "text",
-                      text: "<注意> 為避免有人積欠金額，當有\"兩張\"未確認戰積就會禁止新遊戲。請大家去撻伐還沒按下確認鍵的人",
+                      text: "<注意> 為避免有人積欠金額，當有\"兩張\"未確認戰績就會禁止新遊戲。請大家去撻伐還沒按下確認鍵的人",
                       weight: "regular",
                       margin: "md",
                       wrap: true,

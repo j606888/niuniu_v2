@@ -24,9 +24,9 @@ class Poker::StartGame < Service
 
     return unless @debug
 
-    puts "[莊家]   #{dealer_hand.score.to_s.rjust(3)}妞, #{dealer_hand.readable_cards},              戰機: #{dealer_hand.win_lose_amount}"
-    player_hands.each_with_index do |player_hand, i|
-      puts "[玩家 #{i+1}] #{player_hand.score.to_s.rjust(3)}妞, #{player_hand.readable_cards}, 下注: #{player_hand.bet_amount}元, 戰機: #{player_hand.win_lose_amount}"
-    end
+    # puts "[莊家]   #{dealer_hand.score.to_s.rjust(3)}妞, #{dealer_hand.readable_cards},              戰機: #{dealer_hand.win_lose_amount}"
+    # player_hands.each_with_index do |player_hand, i|
+    #   puts "[玩家 #{i+1}] #{player_hand.score.to_s.rjust(3)}妞, #{player_hand.readable_cards}, 下注: #{player_hand.bet_amount}元, 戰機: #{player_hand.win_lose_amount}"
+    # end
   end
 end

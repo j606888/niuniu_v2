@@ -55,6 +55,12 @@ class LineController < ApplicationController
             break
           end
 
+          if text.include?('幹')
+            word = SworeHelper.pick_swore_word
+            client.reply_message(event['replyToken'], { type: 'text', text: word })
+            break
+          end
+
           if text == '妞妞'
             client.reply_message(event['replyToken'], new_round_flex_message(line_group))
             break
