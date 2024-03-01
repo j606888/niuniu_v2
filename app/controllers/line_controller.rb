@@ -18,7 +18,7 @@ class LineController < ApplicationController
         group_id: source['groupId']
       )
       if line_group.nil?
-        LineGroup.create!(
+        line_group = LineGroup.create!(
           name: '妞妞決鬥場',
           room_id: source['roomId'],
           group_id: source['groupId']
