@@ -1,8 +1,7 @@
 FactoryBot.define do
   factory :payment_confirmation do
-    game_bundle { nil }
-    player { nil }
-    amount { 1 }
-    is_confirmed { false }
+    association :game_bundle
+    association :player
+    amount { 100 }
   end
 end

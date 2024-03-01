@@ -6,6 +6,12 @@ class LineMessageService::CurrentBet < Service
   def perform
     line_group = LineGroup.find_by(id: @line_group_id)
     game = Game.find_by(line_group: line_group, aasm_state: 'bets_opened')
+    if game.nil?
+      return {
+        type: 'text',
+        text: '目前沒有遊戲進行中，傻逼'
+      }
+    end
 
     current_bets = game.bet_records.includes(:player).map do |bet_record|
       {
@@ -144,7 +150,7 @@ class LineMessageService::CurrentBet < Service
               action: {
                 type: "message",
                 label: "發牌",
-                text: "GOGO"
+                text: "GO"
               },
               color: "#2196F3",
               height: "sm",

@@ -41,16 +41,16 @@ class LineController < ApplicationController
         case event.type
         when Line::Bot::Event::MessageType::Text
           text = event.message['text']
+
+          # if text.upcase == 'TEST'
+          #   lose_message = LineMessageService::ForceSettle.call(line_group_id: line_group.id)
+
+          #   r = client.reply_message(event['replyToken'], lose_message)
+          #   break
+          # end
+
           if text == '妞妞'
             client.reply_message(event['replyToken'], new_round_flex_message(line_group))
-            break
-          end
-
-          match = text.match(/LIMIT\s+(\d+)/)
-          if match
-            max_bet_amount = match[1].to_i
-            GameService::Create.call(player_id: player.id, line_group_id: line_group.id, max_bet_amount: max_bet_amount)
-            client.reply_message(event['replyToken'], new_game_message(line_group))
             break
           end
 
@@ -65,6 +65,8 @@ class LineController < ApplicationController
                 client.reply_message(event['replyToken'], new_game_message(line_group))
               rescue GameService::Create::BetAmountOverMaxError => e
                 client.reply_message(event['replyToken'], { type: 'text', text: "[失敗] 為了我們的友情，開局金額禁止超過 #{GameService::Create::MAX_BET_AMOUNT}" })
+              rescue GameService::Create::TooManyUnpaidGameBundlesError => e
+                client.reply_message(event['replyToken'], { type: 'text', text: "[失敗] 太多未確認收付的戰績，不給玩" })
               end
               break
             elsif last_game.aasm_state == 'bets_opened'
@@ -78,28 +80,41 @@ class LineController < ApplicationController
             end
           end
 
-          if text == "NOW"
+          if text.upcase == "NOW"
             client.reply_message(event['replyToken'], current_bet(line_group))
             break
           end
 
-          if text == "GOGO"
+          if text.upcase == "GO"
             GameService::Battle.call(dealer_id: player.id, line_group_id: line_group.id)
-            client.reply_message(event['replyToken'], [game_result(line_group), new_round_flex_message(line_group)])
+            lose_message = nil
+
+            if any_player_lose_over_1000?(line_group)
+              PaymentService::Settle.call(line_group_id: line_group.id)
+              lose_message = LineMessageService::ForceSettle.call(line_group_id: line_group.id)
+            end
+
+            messages = [new_round_flex_message(line_group, with_game_result: true), lose_message].compact
+            client.reply_message(event['replyToken'], messages)
             break
           end
 
-          if text == "CANCEL"
+          if text.upcase == "CANCEL"
             GameService::Cancel.call(player_id: player.id, line_group_id: line_group.id)
             client.reply_message(event['replyToken'], [{ type: 'text', text: "已取消遊戲" }, new_round_flex_message(line_group)])
             break
           end
 
-          match = text.match(/^CONFIRM SETTLE #(\d+)$/)
+          if text.upcase == "SETTLE"
+            PaymentService::Settle.call(line_group_id: line_group.id)
+            client.reply_message(event['replyToken'], [{ type: 'text', text: "結算成功，該付錢囉各位" }, new_round_flex_message(line_group)])
+          end
+
+          match = text.match(/^CONFIRM SCORE #(\d+)$/)
           if match
             payment_confirmation_id = match[1].to_i
             PaymentService::ConfirmPayment.call(game_bundle_id: payment_confirmation_id, player_id: player.id)
-            client.reply_message(event['replyToken'], { type: 'text', text: "#{player.name} 已確認結清" })
+            client.reply_message(event['replyToken'], { type: 'text', text: "#{player.name} 已確認收付" })
             break
           end
         end
@@ -119,8 +134,8 @@ class LineController < ApplicationController
     }
   end
 
-  def new_round_flex_message(line_group)
-    LineMessageService::Dashboard.call(line_group_id: line_group.id)
+  def new_round_flex_message(line_group, with_game_result: false)
+    LineMessageService::Dashboard.call(line_group_id: line_group.id, with_game_result: with_game_result)
   end
 
   def new_game_message(line_group)
@@ -137,5 +152,9 @@ class LineController < ApplicationController
 
   def game_result(line_group)
     LineMessageService::GameResult.call(line_group_id: line_group.id)
+  end
+
+  def any_player_lose_over_1000?(line_group)
+    PlayerService::UnsettleWinAmount.call(line_group_id: line_group.id).values.any? { |win_amount| win_amount <= -1000 }
   end
 end

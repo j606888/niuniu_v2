@@ -56,7 +56,7 @@ class LineMessageService::UnpaidBundle < Service
             contents: [
               {
                 type: "text",
-                text: "未結清債務 ##{game_bundle.id}",
+                text: "未確認戰績 ##{game_bundle.id}",
                 weight: "bold",
                 size: "md",
                 align: "center",
@@ -70,7 +70,7 @@ class LineMessageService::UnpaidBundle < Service
           },
           {
             type: "text",
-            text: "累積兩筆未結清債務將禁止新遊戲",
+            text: "累積兩筆未確認戰績將禁止新遊戲",
             size: "xxs",
             color: "#AAAAAA",
             wrap: true,
@@ -87,7 +87,7 @@ class LineMessageService::UnpaidBundle < Service
           },
           {
             type: "text",
-            text: "結清請按此",
+            text: "收款/付款後請按此",
             size: "xxs",
             color: "#AAAAAA",
             wrap: true,
@@ -97,8 +97,8 @@ class LineMessageService::UnpaidBundle < Service
             type: "button",
             action: {
               type: "message",
-              label: "確認結清",
-              text: "CONFIRM SETTLE ##{game_bundle.id}"
+              label: "確認收付",
+              text: "CONFIRM SCORE ##{game_bundle.id}"
             },
             color: "#2196F3",
             height: "sm",

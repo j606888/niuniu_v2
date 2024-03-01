@@ -1,6 +1,7 @@
 class LineMessageService::Dashboard < Service
-  def initialize(line_group_id:)
+  def initialize(line_group_id:, with_game_result: false)
     @line_group_id = line_group_id
+    @with_game_result = with_game_result
   end
 
   def perform
@@ -12,7 +13,13 @@ class LineMessageService::Dashboard < Service
 
     unpaid_bundles = line_group.game_bundles.where(aasm_state: 'created')
 
-    flex_message(score_array, players_map, unpaid_bundles)
+    if @with_game_result
+      game_result = LineMessageService::GameResult.call(line_group_id: @line_group_id)
+    else
+      game_result = nil
+    end
+
+    flex_message(score_array, players_map, unpaid_bundles, game_result)
   end
 
   private
@@ -33,7 +40,7 @@ class LineMessageService::Dashboard < Service
     score_map.to_a.sort_by { |_player_id, score| -score }
   end
 
-  def flex_message(score_array, players_map, unpaid_bundles = [])
+  def flex_message(score_array, players_map, unpaid_bundles = [], game_result = nil)
     bundle_messages = unpaid_bundles.map { |unpaid_bundle| LineMessageService::UnpaidBundle.call(game_bundle_id: unpaid_bundle.id) }
     if score_array.empty?
       contents = [
@@ -85,6 +92,7 @@ class LineMessageService::Dashboard < Service
       contents: {
         type: 'carousel',
         contents: [
+          game_result,
           {
             type: "bubble",
             body: {
@@ -103,7 +111,7 @@ class LineMessageService::Dashboard < Service
                   contents: [
                     {
                       type: "text",
-                      text: "新回合進行中",
+                      text: "四七小老二",
                       weight: "bold",
                       size: "md",
                       flex: 2,
@@ -195,7 +203,7 @@ class LineMessageService::Dashboard < Service
               ]
             }
           }
-        ] + bundle_messages
+        ].compact + bundle_messages
       }
     }
   end

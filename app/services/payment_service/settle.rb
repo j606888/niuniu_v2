@@ -12,6 +12,8 @@ class PaymentService::Settle < Service
 
     player_win_amount_map = {}
     not_bundle_games = line_group.games.where(aasm_state: 'game_ended', game_bundle_id: nil).includes(:bet_records)
+
+    raise "No games to settle" if not_bundle_games.empty?
     not_bundle_games.each do |game|
       game.bet_records.each do |bet_record|
         player_win_amount_map[bet_record.player_id] ||= 0
