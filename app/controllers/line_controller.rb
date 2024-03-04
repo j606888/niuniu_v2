@@ -92,6 +92,10 @@ class LineController < ApplicationController
             end
           end
 
+          if text.upcase == "TOTAL"
+            client.reply_message(event['replyToken'], total_win_amount(line_group))
+          end
+
           if text.upcase == "NOW"
             client.reply_message(event['replyToken'], current_bet(line_group))
             break
@@ -168,6 +172,10 @@ class LineController < ApplicationController
 
   def readme
     LineMessageService::Readme.call
+  end
+
+  def total_win_amount(line_group)
+    LineMessageService::TotalWinAmount.call(line_group_id: line_group.id)
   end
 
   def any_player_lose_over_1000?(line_group)

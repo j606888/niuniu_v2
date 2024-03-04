@@ -123,6 +123,14 @@ class LineMessageService::Dashboard < Service
                           color: "#AAAAAA",
                           margin: "sm",
                           contents: []
+                        },
+                        {
+                          type: "text",
+                          text: "輸入 TOTAL 看總成績",
+                          size: "xxs",
+                          color: "#AAAAAA",
+                          margin: "xs",
+                          contents: []
                         }
                       ]
                     },
