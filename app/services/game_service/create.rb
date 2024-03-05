@@ -2,7 +2,7 @@ class GameService::Create < Service
   class BetAmountOverMaxError < StandardError; end
   class TooManyUnpaidGameBundlesError < StandardError; end
 
-  MAX_BET_AMOUNT = 200
+  MAX_BET_AMOUNT = 100
   MAX_UNPAID_GAME_BUNDLE_COUNT = 2
 
   def initialize(player_id:, line_group_id:, max_bet_amount:)

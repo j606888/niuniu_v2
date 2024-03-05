@@ -56,7 +56,7 @@ class LineMessageService::Readme < Service
                     },
                     {
                       type: "text",
-                      text: "為了預防大家走火入魔，上限值最高只能設到 200，超過的都會被忽略",
+                      text: "為了預防大家走火入魔，上限值最高只能設到 #{GameService::Create::MAX_BET_AMOUNT}",
                       weight: "regular",
                       margin: "md",
                       wrap: true,
