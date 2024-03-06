@@ -6,7 +6,7 @@ class LineMessageService::UnpaidBundle < Service
   def perform
     game_bundle = GameBundle.find(@game_bundle_id)
     line_group = game_bundle.line_group
-    payment_confirmations = game_bundle.payment_confirmations.includes(:player)
+    payment_confirmations = game_bundle.payment_confirmations.order(amount: :desc).includes(:player)
 
     flex_message(game_bundle, payment_confirmations)
   end
