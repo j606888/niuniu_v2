@@ -117,6 +117,26 @@ class LineMessageService::CurrentBet < Service
             },
             {
               type: "text",
+              text: "莊家",
+              size: "xxs",
+              color: "#AAAAAA",
+              wrap: true,
+              contents: []
+            },
+            {
+              type: "text",
+              text: game.dealer.name,
+              weight: "bold",
+              margin: "sm",
+              flex: 3,
+              contents: []
+            },
+            {
+              type: "separator",
+              margin: "lg"
+            },
+            {
+              type: "text",
               text: "目前下注",
               size: "xxs",
               color: "#AAAAAA",

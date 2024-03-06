@@ -99,7 +99,7 @@ class LineMessageService::Dashboard < Service
               type: "box",
               layout: "vertical",
               spacing: "md",
-              contents: [
+              contents: (bingo_blocks + [
                 {
                   type: "box",
                   layout: "horizontal",
@@ -145,7 +145,7 @@ class LineMessageService::Dashboard < Service
                       height: "sm",
                       style: "primary"
                     }
-                  ]
+                  ].compact
                 },
                 {
                   type: "separator",
@@ -217,11 +217,37 @@ class LineMessageService::Dashboard < Service
                     }
                   ]
                 }
-              ]
+              ]).compact
             }
           }
         ].compact + bundle_messages
       }
     }
+  end
+
+  def bingo_blocks
+    if BingoHelper.bingo_time?
+      return [
+        {
+          type: 'text',
+          text: "⭐ 深夜加碼時間，上限 200 ⭐",
+          color: "#F71E1E",
+          align: "center",
+          contents: []
+        },
+        {
+          type: "text",
+          text: "(11:30pm ~ 12:00am 限定)",
+          weight: "regular",
+          size: "xs",
+          color: "#F71E1E",
+          align: "center",
+          margin: "xs",
+          contents: []
+        }
+      ]
+    else
+      return []
+    end
   end
 end

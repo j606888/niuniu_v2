@@ -76,7 +76,7 @@ class LineController < ApplicationController
                 GameService::Create.call(player_id: player.id, line_group_id: line_group.id, max_bet_amount: amount)
                 client.reply_message(event['replyToken'], new_game_message(line_group))
               rescue GameService::Create::BetAmountOverMaxError => e
-                client.reply_message(event['replyToken'], { type: 'text', text: "[失敗] 為了我們的友情，開局金額禁止超過 #{GameService::Create::MAX_BET_AMOUNT}" })
+                client.reply_message(event['replyToken'], { type: 'text', text: "[失敗] 為了我們的友情，開局金額禁止超過 #{BingoHelper.max_bet_amount}" })
               rescue GameService::Create::TooManyUnpaidGameBundlesError => e
                 client.reply_message(event['replyToken'], { type: 'text', text: "[失敗] 太多未確認收付的戰績，不給玩" })
               end

@@ -2,7 +2,6 @@ class GameService::Create < Service
   class BetAmountOverMaxError < StandardError; end
   class TooManyUnpaidGameBundlesError < StandardError; end
 
-  MAX_BET_AMOUNT = 100
   MAX_UNPAID_GAME_BUNDLE_COUNT = 2
 
   def initialize(player_id:, line_group_id:, max_bet_amount:)
@@ -15,7 +14,7 @@ class GameService::Create < Service
     player = Player.find_by(id: @player_id)
     line_group = LineGroup.find_by(id: @line_group_id)
 
-    raise BetAmountOverMaxError, "bet_amount over max_bet_amount" if @max_bet_amount > MAX_BET_AMOUNT
+    raise BetAmountOverMaxError, "bet_amount over max_bet_amount" if @max_bet_amount > BingoHelper.max_bet_amount
     validate_player_belong_to_line_group!(player, line_group)
     validate_none_ongoing_game!(line_group)
     validate_unpaid_game_bundle_count!(line_group)
