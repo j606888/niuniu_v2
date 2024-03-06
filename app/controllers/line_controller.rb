@@ -102,20 +102,25 @@ class LineController < ApplicationController
           end
 
           if text.upcase == "GO"
-            GameService::Battle.call(dealer_id: player.id, line_group_id: line_group.id)
-            lose_message = nil
+            begin
+              GameService::Battle.call(dealer_id: player.id, line_group_id: line_group.id)
+              lose_message = nil
 
-            if any_player_lose_over_1000?(line_group)
-              PaymentService::Settle.call(line_group_id: line_group.id)
-              lose_message = LineMessageService::ForceSettle.call(line_group_id: line_group.id)
+              if any_player_lose_over_1000?(line_group)
+                PaymentService::Settle.call(line_group_id: line_group.id)
+                lose_message = LineMessageService::ForceSettle.call(line_group_id: line_group.id)
+              end
+
+              messages = [new_round_flex_message(line_group, with_game_result: true), lose_message].compact
+              client.reply_message(event['replyToken'], messages)
+              break
+            rescue GameService::Battle::NoPlayerError => e
+              client.reply_message(event['replyToken'], { type: 'text', text: "[失敗] 沒有人下注，不給開牌" })
+              break
             end
-
-            messages = [new_round_flex_message(line_group, with_game_result: true), lose_message].compact
-            client.reply_message(event['replyToken'], messages)
-            break
           end
 
-          if text.upcase == "CANCEL"
+          if text.upcase == "EXIT"
             GameService::Cancel.call(player_id: player.id, line_group_id: line_group.id)
             client.reply_message(event['replyToken'], [{ type: 'text', text: "已取消遊戲" }, new_round_flex_message(line_group)])
             break

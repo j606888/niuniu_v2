@@ -83,7 +83,7 @@ class LineMessageService::CurrentBet < Service
                   action: {
                     type: "message",
                     label: "取消",
-                    text: "CANCEL"
+                    text: "EXIT"
                   },
                   color: "#ECA1A1FF",
                   margin: "none",
