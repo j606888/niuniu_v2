@@ -1,4 +1,6 @@
 class GameService::Battle < Service
+  class NoPlayerError < StandardError; end
+
   def initialize(dealer_id:, line_group_id:)
     @dealer_id = dealer_id
     @line_group_id = line_group_id
@@ -12,6 +14,7 @@ class GameService::Battle < Service
     raise "There is no ongoing game in this line group." if game.nil?
     raise "Player does not belong to this line group." if dealer.line_group != line_group
     raise "Player is not dealer" if game.dealer != dealer
+    raise NoPlayerError if game.bet_records.empty?
 
     game.start_battle!
 

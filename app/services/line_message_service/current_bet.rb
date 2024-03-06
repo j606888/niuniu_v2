@@ -83,7 +83,7 @@ class LineMessageService::CurrentBet < Service
                   action: {
                     type: "message",
                     label: "取消",
-                    text: "CANCEL"
+                    text: "EXIT"
                   },
                   color: "#ECA1A1FF",
                   margin: "none",
@@ -109,6 +109,26 @@ class LineMessageService::CurrentBet < Service
               size: "3xl",
               align: "center",
               margin: "xs",
+              contents: []
+            },
+            {
+              type: "separator",
+              margin: "lg"
+            },
+            {
+              type: "text",
+              text: "莊家",
+              size: "xxs",
+              color: "#AAAAAA",
+              wrap: true,
+              contents: []
+            },
+            {
+              type: "text",
+              text: game.dealer.name,
+              weight: "bold",
+              margin: "sm",
+              flex: 3,
               contents: []
             },
             {
