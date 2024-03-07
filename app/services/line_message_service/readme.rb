@@ -56,7 +56,7 @@ class LineMessageService::Readme < Service
                     },
                     {
                       type: "text",
-                      text: "為了預防大家走火入魔，上限值最高只能設到 #{GameService::Create::MAX_BET_AMOUNT}",
+                      text: "為了預防大家走火入魔，上限值最高只能設到 #{BingoHelper.max_bet_amount}",
                       weight: "regular",
                       margin: "md",
                       wrap: true,
