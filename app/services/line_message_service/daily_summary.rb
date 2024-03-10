@@ -6,7 +6,7 @@ class LineMessageService::DailySummary < Service
   def perform
     line_group = LineGroup.find_by(id: @line_group_id)
     timezone = 'Taipei'
-    date = Date.today
+    date = Time.current.in_time_zone('Taipei').to_date
     yesterday = date - 1
     day_before_yesterday = date - 2
 
