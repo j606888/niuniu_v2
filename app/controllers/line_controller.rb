@@ -129,6 +129,13 @@ class LineController < ApplicationController
           if text.upcase == "SETTLE"
             PaymentService::Settle.call(line_group_id: line_group.id)
             client.reply_message(event['replyToken'], [{ type: 'text', text: "結算成功，該付錢囉各位" }, new_round_flex_message(line_group)])
+            break
+          end
+
+          if text.upcase == "RECENT"
+            message = LineMessageService::DailySummary.call(line_group_id: line_group.id)
+            client.reply_message(event['replyToken'], message)
+            break
           end
 
           match = text.match(/^CONFIRM SCORE #(\d+)$/)
