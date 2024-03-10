@@ -82,15 +82,33 @@ class LineMessageService::NewGame < Service
               contents: []
             },
             {
-              type: "button",
-              action: {
-                type: "message",
-                label: "當前下注",
-                text: "NOW"
-              },
-              color: "#2196F3",
-              height: "sm",
-              style: "primary"
+              type: "box",
+              layout: "horizontal",
+              spacing: "md",
+              contents: [
+                {
+                  type: "button",
+                  action: {
+                    type: "message",
+                    label: "當前下注",
+                    text: "NOW"
+                  },
+                  color: "#81D4FA",
+                  height: "sm",
+                  style: "primary"
+                },
+                {
+                  type: "button",
+                  action: {
+                    type: "message",
+                    label: "發牌",
+                    text: "GO"
+                  },
+                  color: "#2196F3",
+                  height: "sm",
+                  style: "primary"
+                },
+              ]
             },
             {
               type: "separator"
