@@ -15,6 +15,16 @@ class LineMessageService::GameResult < Service
 
   private
 
+  def message_color(win_amount)
+    if win_amount > 0
+      "#8AE77760"
+    elsif win_amount < 0
+      "#F7BEBEB2"
+    else
+      "#9A9A9A3A"
+    end
+  end
+
   def flex_message(dealer_bet_records, player_bet_records)
     {
       type: "bubble",
@@ -84,6 +94,8 @@ class LineMessageService::GameResult < Service
                 type: "box",
                 layout: "horizontal",
                 margin: "lg",
+                backgroundColor: message_color(dealer_bet_records.win_amount),
+                paddingEnd: "12px",
                 contents: [
                   {
                     type: "filler"
@@ -92,6 +104,7 @@ class LineMessageService::GameResult < Service
                     type: "text",
                     text: PokerHelper.win_amount_to_text(dealer_bet_records.win_amount),
                     weight: "bold",
+                    align: "end",
                     color: "#000000",
                     margin: "md",
                     wrap: false,
@@ -148,14 +161,16 @@ class LineMessageService::GameResult < Service
               {
                 type: "box",
                 layout: "horizontal",
-                margin: "lg",
+                margin: "md",
+                backgroundColor: message_color(player_bet_record.win_amount),
+                paddingEnd: "12px",
+                paddingStart: "12px",
                 contents: [
                   {
                     type: "text",
                     text: "Bet: #{player_bet_record.bet_amount}",
                     weight: "bold",
                     color: "#000000",
-                    margin: "md",
                     wrap: false,
                     contents: []
                   },
@@ -164,6 +179,7 @@ class LineMessageService::GameResult < Service
                     text: PokerHelper.win_amount_to_text(player_bet_record.win_amount),
                     weight: "bold",
                     color: "#000000",
+                    align: "end",
                     margin: "md",
                     wrap: false,
                     contents: []
