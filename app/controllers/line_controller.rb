@@ -40,7 +40,7 @@ class LineController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
-          text = event.message['text'].strip
+          text = event.message['text'].strip.upcase
 
           # if text.upcase == 'TEST'
           #   lose_message = LineMessageService::ForceSettle.call(line_group_id: line_group.id)

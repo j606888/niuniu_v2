@@ -111,14 +111,7 @@ class LineMessageService::Dashboard < Service
                       contents: [
                         {
                           type: "text",
-                          text: "四七小老二",
-                          weight: "bold",
-                          size: "md",
-                          contents: []
-                        },
-                        {
-                          type: "text",
-                          text: "輸入 README 看說明",
+                          text: "README - 說明書",
                           size: "xxs",
                           color: "#AAAAAA",
                           margin: "sm",
@@ -126,7 +119,15 @@ class LineMessageService::Dashboard < Service
                         },
                         {
                           type: "text",
-                          text: "輸入 TOTAL 看總成績",
+                          text: "TOTAL - 總成績",
+                          size: "xxs",
+                          color: "#AAAAAA",
+                          margin: "xs",
+                          contents: []
+                        },
+                        {
+                          type: "text",
+                          text: "RECENT - 近三天成績",
                           size: "xxs",
                           color: "#AAAAAA",
                           margin: "xs",
