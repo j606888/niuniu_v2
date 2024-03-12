@@ -1,5 +1,6 @@
 module BingoHelper
   DEFAULT_MAX_BET_AMOUNT = 100
+  DEFAULT_MAX_SETTLE_AMOUNT = 1000
 
   class << self
     def bingo_time?
@@ -15,6 +16,10 @@ module BingoHelper
 
     def max_bet_amount
       bingo_time? ? DEFAULT_MAX_BET_AMOUNT * 2 : DEFAULT_MAX_BET_AMOUNT
+    end
+
+    def max_settle_amount
+      bingo_time? ? DEFAULT_MAX_SETTLE_AMOUNT * 1.6 : DEFAULT_MAX_SETTLE_AMOUNT
     end
   end
 end

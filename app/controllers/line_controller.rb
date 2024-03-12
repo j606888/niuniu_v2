@@ -106,7 +106,7 @@ class LineController < ApplicationController
               GameService::Battle.call(dealer_id: player.id, line_group_id: line_group.id)
               lose_message = nil
 
-              if any_player_lose_over_1000?(line_group)
+              if any_player_lose_over_max_settle_amount?(line_group)
                 PaymentService::Settle.call(line_group_id: line_group.id)
                 lose_message = LineMessageService::ForceSettle.call(line_group_id: line_group.id)
               end
@@ -190,7 +190,7 @@ class LineController < ApplicationController
     LineMessageService::TotalWinAmount.call(line_group_id: line_group.id)
   end
 
-  def any_player_lose_over_1000?(line_group)
-    PlayerService::UnsettleWinAmount.call(line_group_id: line_group.id).values.any? { |win_amount| win_amount <= -1000 }
+  def any_player_lose_over_max_settle_amount?(line_group)
+    PlayerService::UnsettleWinAmount.call(line_group_id: line_group.id).values.any? { |win_amount| win_amount <= BingoHelper.max_settle_amount * -1 }
   end
 end
