@@ -38,7 +38,7 @@ class LineMessageService::ForceSettle < Service
             },
             {
               type: "text",
-              text: "#{loser.name} 不幸的輸破 1000",
+              text: "#{loser.name} 不幸的輸破 #{BingoHelper.max_settle_amount}",
               weight: "regular",
               margin: "xl",
               wrap: true,
